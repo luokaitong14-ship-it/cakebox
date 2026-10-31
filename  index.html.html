@@ -1,0 +1,1327 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>纸杯蛋糕礼物</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --ink: #fdf6ec;
+        --ink-dim: rgba(253, 246, 236, 0.72);
+        --panel: #fffaf2;
+        --panel-ink: #4a3428;
+        --panel-dim: #8a6f5e;
+        --accent: #e4572e;
+        --mint: #7fc7b5;
+        --table-1: #3a241a;
+        --table-2: #2b1a12;
+        --tray: #f7f3ec;
+        --tray-edge: #ddd3c2;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        font-family: "Noto Sans SC", system-ui, sans-serif;
+        color: var(--ink);
+        min-height: 100vh;
+        background:
+          radial-gradient(120% 70% at 50% 0%, rgba(255, 190, 110, 0.16), transparent 60%),
+          repeating-linear-gradient(90deg, rgba(0,0,0,0.16) 0 2px, transparent 2px 148px),
+          repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 3px, transparent 3px 7px),
+          linear-gradient(160deg, var(--table-1), var(--table-2) 70%);
+        background-color: var(--table-2);
+      }
+      .wrap {
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 34px 18px 48px;
+      }
+      header { text-align: center; margin-bottom: 22px; }
+      h1 {
+        font-family: "Noto Serif SC", serif;
+        font-weight: 900;
+        font-size: clamp(30px, 7vw, 42px);
+        letter-spacing: 0.06em;
+        margin: 0 0 8px;
+      }
+      header p {
+        margin: 0;
+        color: var(--ink-dim);
+        font-size: 15px;
+        line-height: 1.7;
+      }
+      header p b { color: #ffc98a; font-weight: 700; }
+
+      .section-title {
+        font-family: "Noto Serif SC", serif;
+        font-size: 22px;
+        font-weight: 900;
+        letter-spacing: 0.05em;
+        margin: 30px 0 6px;
+      }
+      .section-sub { margin: 0 0 14px; color: var(--ink-dim); font-size: 14px; line-height: 1.7; }
+
+      /* ---------- 做蛋糕工坊 ---------- */
+      .workshop {
+        position: relative;
+        background: var(--panel);
+        color: var(--panel-ink);
+        border-radius: 14px;
+        padding: 20px 22px 22px;
+        box-shadow: 0 16px 30px rgba(0,0,0,0.35);
+        overflow: hidden;
+      }
+      .steps-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+      .step-chip {
+        font-family: inherit;
+        font-size: 13.5px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        padding: 7px 14px;
+        border-radius: 999px;
+        border: 1.5px solid #d9c3a5;
+        background: #fffdf7;
+        color: #a5825f;
+        cursor: pointer;
+      }
+      .step-chip .n {
+        display: inline-block;
+        width: 19px; height: 19px;
+        line-height: 19px;
+        text-align: center;
+        border-radius: 50%;
+        background: #ead9c2;
+        color: #8a6f5e;
+        font-size: 12px;
+        margin-right: 6px;
+      }
+      .step-chip.active { border-color: var(--accent); color: var(--panel-ink); background: #fff3e4; }
+      .step-chip.active .n { background: var(--accent); color: #fff; }
+      .step-chip.done { border-color: #9dc3ae; color: #4c7a5f; }
+      .step-chip.done .n { background: #7fb894; color: #fff; }
+      .step-chip:disabled { opacity: 0.45; cursor: default; }
+      .step-panel h3 {
+        font-family: "Noto Serif SC", serif;
+        font-size: 18px;
+        margin: 0 0 4px;
+      }
+      .step-panel .hint { margin: 0 0 12px; color: var(--panel-dim); font-size: 14px; line-height: 1.7; }
+      .stage {
+        background: radial-gradient(70% 90% at 50% 30%, #fffdf7, #f7ecd9);
+        border: 1px solid #ecdcc0;
+        border-radius: 12px;
+        padding: 8px 6px 2px;
+        margin-bottom: 14px;
+      }
+      .stage svg { display: block; width: 100%; height: auto; }
+      .pbar {
+        height: 10px;
+        background: #ead9c2;
+        border-radius: 999px;
+        overflow: hidden;
+        margin-bottom: 6px;
+      }
+      .pbar > i {
+        display: block;
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #f2b134, var(--accent));
+        border-radius: 999px;
+        transition: width 0.15s ease;
+      }
+      .pbar-label { font-size: 13px; color: var(--panel-dim); margin: 0 0 12px; }
+      .pbar-label b { color: var(--accent); }
+      .step-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+      .btn {
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        color: #fff7ea;
+        background: linear-gradient(180deg, #ef6a3a, #d94f22);
+        border: 1px solid #b93f18;
+        border-radius: 999px;
+        padding: 10px 22px;
+        cursor: pointer;
+        box-shadow: 0 6px 14px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.35);
+        touch-action: none;
+        user-select: none;
+        -webkit-user-select: none;
+      }
+      .btn:active { transform: translateY(1px); }
+      .btn.ghost {
+        background: #fffdf7;
+        color: #8a5a33;
+        border: 1.5px solid #d9c3a5;
+        box-shadow: none;
+      }
+      .btn.small { padding: 8px 18px; font-size: 13.5px; }
+      .step-done-note { color: #4c7a5f; font-weight: 700; font-size: 14px; margin: 0; }
+      #stirZone { cursor: grab; touch-action: none; }
+      #stirZone:active { cursor: grabbing; }
+      #stirSpoon { transform-box: view-box; transform-origin: 150px 98px; }
+      .pipe-tier { transform-box: fill-box; transform-origin: 50% 100%; }
+      #pipeCherry { transition: opacity 0.3s ease, transform 0.3s ease; transform-box: fill-box; transform-origin: center; }
+      .candle-flame-g { transition: opacity 0.35s ease; }
+      #blowFlame { transform-box: fill-box; transform-origin: 50% 100%; }
+      .smoke-path { opacity: 0; }
+      .smoke-path.show { animation: smokeRise 2.4s ease-out forwards; }
+      @keyframes smokeRise {
+        0% { opacity: 0; transform: translateY(4px); }
+        25% { opacity: 0.75; }
+        100% { opacity: 0; transform: translateY(-16px); }
+      }
+      .workshop-done {
+        margin-top: 16px;
+        border: 2px dashed #9dc3ae;
+        background: #f2f9f3;
+        border-radius: 10px;
+        padding: 14px 16px;
+        text-align: center;
+        color: #3d6b4e;
+        font-size: 15px;
+        line-height: 1.8;
+      }
+      .workshop-done b { font-family: "Noto Serif SC", serif; font-size: 17px; }
+
+      /* ---------- 蛋糕盒 ---------- */
+      .tray {
+        position: relative;
+        background: linear-gradient(175deg, #fffdf8, var(--tray) 55%, #efe8da);
+        border: 1px solid var(--tray-edge);
+        border-radius: 10px;
+        padding: clamp(16px, 4.5vw, 30px);
+        box-shadow:
+          0 30px 50px rgba(0, 0, 0, 0.5),
+          0 4px 0 #cfc2ab,
+          inset 0 1px 0 #ffffff;
+      }
+      .tray::after {
+        content: "";
+        position: absolute;
+        inset: 8px;
+        border: 1px solid rgba(160, 140, 110, 0.25);
+        border-radius: 6px;
+        pointer-events: none;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(6px, 2vw, 14px);
+      }
+      .well {
+        position: relative;
+        border-radius: 50%;
+        background: radial-gradient(50% 50% at 50% 42%, rgba(120, 90, 60, 0.20), rgba(120, 90, 60, 0.05) 62%, transparent 72%);
+        padding: 2px;
+      }
+
+      /* ---------- 纸杯蛋糕按钮 ---------- */
+      .cake {
+        position: relative;
+        display: block;
+        width: 100%;
+        padding: 0;
+        border: 0;
+        background: none;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        border-radius: 18px;
+      }
+      .cake:focus-visible { outline: 3px solid #ffb35c; outline-offset: 2px; }
+      .cake svg { display: block; width: 100%; height: auto; }
+      .cake .lid {
+        transition: transform 0.75s cubic-bezier(0.34, 1.3, 0.4, 1);
+        transform-box: fill-box;
+        transform-origin: 50% 92%;
+      }
+      .cake.open .lid { transform: translateY(-52px) rotate(-8deg); }
+      .cake .cavity {
+        opacity: 0;
+        transition: opacity 0.45s ease 0.12s;
+      }
+      .cake.open .cavity { opacity: 1; }
+      .cake .cupshadow {
+        transition: opacity 0.5s ease;
+      }
+      .cake.open .cupshadow { opacity: 0.35; }
+      .cake-name {
+        display: block;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        color: #7a5f49;
+        padding: 2px 0 8px;
+      }
+      .cake-name .state { color: #b08a64; font-weight: 500; letter-spacing: 0.04em; }
+      .cake.open .cake-name .state { color: var(--accent); }
+
+      .flame {
+        transform-box: fill-box;
+        transform-origin: 50% 100%;
+        animation: flick 0.85s ease-in-out infinite alternate;
+      }
+      @keyframes flick {
+        from { transform: scale(1) rotate(-2.5deg); }
+        to   { transform: scale(1.12, 1.22) rotate(3deg); }
+      }
+      .glow {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: glowpulse 1.7s ease-in-out infinite alternate;
+      }
+      @keyframes glowpulse {
+        from { opacity: 0.45; }
+        to   { opacity: 0.85; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .flame, .glow { animation: none; }
+        .cake .lid { transition: none; }
+        .flip-inner { transition: none !important; }
+        .smoke-path.show { animation: none; opacity: 0.4; }
+      }
+
+      /* 打开时的小星火 */
+      .spark {
+        position: absolute;
+        width: 9px; height: 9px;
+        pointer-events: none;
+        z-index: 5;
+      }
+      .spark::before, .spark::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: #ffb35c;
+        clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+      }
+
+      /* ---------- 工具行 ---------- */
+      .tools {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+      }
+      .count { font-size: 14px; color: var(--ink-dim); }
+      .count b { color: #ffc98a; font-size: 17px; }
+
+      /* ---------- 互动卡弹窗 ---------- */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        background: rgba(28, 16, 9, 0.66);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px 14px;
+      }
+      .modal-overlay[hidden] { display: none !important; }
+      .modal-box {
+        position: relative;
+        width: 100%;
+        max-width: 520px;
+        max-height: 88vh;
+        overflow-y: auto;
+        background: var(--panel);
+        color: var(--panel-ink);
+        border-radius: 16px;
+        padding: 22px 22px 24px;
+        box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+        animation: modalPop 0.32s cubic-bezier(0.3, 1.25, 0.45, 1);
+      }
+      @keyframes modalPop {
+        from { transform: translateY(14px) scale(0.96); opacity: 0; }
+        to { transform: translateY(0) scale(1); opacity: 1; }
+      }
+      .modal-box h2 {
+        font-family: "Noto Serif SC", serif;
+        font-size: 20px;
+        margin: 0 36px 4px 0;
+      }
+      .modal-box .desc { margin: 0 0 14px; color: var(--panel-dim); font-size: 14px; line-height: 1.7; }
+      .modal-close {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1.5px solid #d9c3a5;
+        background: #fffdf7;
+        color: #8a5a33;
+        font-size: 20px;
+        line-height: 1;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .modal-close:focus-visible { outline: 3px solid #ffb35c; outline-offset: 2px; }
+      .modal-done {
+        display: block;
+        width: 100%;
+        margin-top: 16px;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .modal-box { animation: none; }
+      }
+      .card-tag {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        color: #b3541e;
+        background: #fdeeda;
+        border: 1px solid #f0d3ac;
+        border-radius: 999px;
+        padding: 3px 11px;
+        margin-bottom: 12px;
+      }
+
+      /* 翻牌卡 */
+      .flipcard {
+        perspective: 900px;
+        height: 188px;
+        cursor: pointer;
+        border-radius: 12px;
+      }
+      .flipcard:focus-visible { outline: 3px solid #ffb35c; outline-offset: 2px; }
+      .flip-inner {
+        position: relative;
+        width: 100%; height: 100%;
+        transform-style: preserve-3d;
+        transition: transform 0.65s cubic-bezier(0.3, 0.9, 0.35, 1);
+      }
+      .flipcard.flipped .flip-inner { transform: rotateY(180deg); }
+      .flip-face {
+        position: absolute;
+        inset: 0;
+        border-radius: 12px;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 18px 22px;
+      }
+      .flip-front {
+        color: #fff7ea;
+        border: 2px solid rgba(255,255,255,0.5);
+        font-family: "Noto Serif SC", serif;
+        font-size: 19px;
+        font-weight: 900;
+        letter-spacing: 0.1em;
+        line-height: 1.6;
+      }
+      .flip-front small { font-family: "Noto Sans SC", sans-serif; font-weight: 500; font-size: 12.5px; letter-spacing: 0.2em; opacity: 0.85; margin-top: 6px; }
+      .flip-front.cherry { background: repeating-linear-gradient(-45deg, #e2708a 0 18px, #d95f7e 18px 36px); }
+      .flip-front.mint { background: repeating-linear-gradient(-45deg, #5da892 0 18px, #4f9c84 18px 36px); }
+      .flip-back {
+        transform: rotateY(180deg);
+        background: #fffdf7;
+        border: 2px solid #ecdcc0;
+        color: var(--panel-ink);
+      }
+      .flip-back .back-label { font-size: 12px; font-weight: 700; letter-spacing: 0.22em; color: #b08a64; margin-bottom: 8px; }
+      .flip-back .back-text { font-family: "Noto Serif SC", serif; font-size: 16.5px; font-weight: 600; line-height: 1.85; margin: 0; }
+      .card-hint { text-align: center; color: var(--panel-dim); font-size: 13px; margin: 10px 0 0; }
+
+      /* 许愿卡 */
+      .wish-stage { display: flex; justify-content: center; margin-bottom: 6px; }
+      .wish-stage svg { width: 74px; height: auto; }
+      .wish-form { display: flex; gap: 8px; flex-wrap: wrap; }
+      .wish-form input {
+        flex: 1 1 200px;
+        font-family: inherit;
+        font-size: 15px;
+        color: var(--panel-ink);
+        background: #fffdf7;
+        border: 1.5px solid #d9c3a5;
+        border-radius: 999px;
+        padding: 10px 18px;
+        outline: none;
+      }
+      .wish-form input:focus { border-color: var(--accent); }
+      .wish-result {
+        margin: 14px 0 0;
+        text-align: center;
+        font-size: 14.5px;
+        line-height: 1.9;
+        color: var(--panel-dim);
+      }
+      .wish-result .wish-text {
+        display: block;
+        font-family: "Noto Serif SC", serif;
+        font-size: 18px;
+        font-weight: 900;
+        color: var(--panel-ink);
+        margin-bottom: 2px;
+      }
+
+      /* 抽一张卡 */
+      .drawn-card {
+        border: 2px solid #ecdcc0;
+        background: #fffdf7;
+        border-radius: 12px;
+        min-height: 132px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 20px 24px;
+        margin-bottom: 14px;
+      }
+      .drawn-card.empty {
+        border-style: dashed;
+        color: #a5825f;
+        font-size: 14px;
+        line-height: 1.8;
+        background: repeating-linear-gradient(-45deg, rgba(217,195,165,0.10) 0 10px, transparent 10px 20px);
+      }
+      .drawn-card .draw-kind { font-size: 12px; font-weight: 700; letter-spacing: 0.22em; color: #b3541e; margin-bottom: 8px; }
+      .drawn-card .draw-text { font-family: "Noto Serif SC", serif; font-size: 16.5px; font-weight: 600; line-height: 1.85; margin: 0; }
+      .drawn-card.pop { animation: drawPop 0.45s cubic-bezier(0.3, 1.4, 0.5, 1); }
+      @keyframes drawPop {
+        from { transform: scale(0.92) rotate(-1.5deg); opacity: 0.4; }
+        to   { transform: scale(1) rotate(0deg); opacity: 1; }
+      }
+      .draw-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+      .draw-count { font-size: 13px; color: var(--panel-dim); }
+
+      footer {
+        text-align: center;
+        margin-top: 26px;
+        color: rgba(253, 246, 236, 0.45);
+        font-size: 12.5px;
+        letter-spacing: 0.08em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>纸杯蛋糕礼物</h1>
+        <p>这盒蛋糕有两种玩法：先在小工坊里<b>亲手做一个</b>——搅拌、挤奶油、点蜡烛、吹灭；<br />再打开盒子里的四个蛋糕，<b>每个里面都藏着一张互动卡</b>。</p>
+      </header>
+
+      <h2 class="section-title">先亲手做一个</h2>
+      <p class="section-sub">四步都由你来动手，做完会有自己的小蛋糕诞生。</p>
+
+      <section class="workshop" id="workshop" aria-label="做蛋糕小工坊">
+        <div class="steps-nav" role="tablist" aria-label="做蛋糕步骤">
+          <button class="step-chip" type="button" data-step="1" role="tab"><span class="n">1</span>搅拌面糊</button>
+          <button class="step-chip" type="button" data-step="2" role="tab"><span class="n">2</span>挤奶油</button>
+          <button class="step-chip" type="button" data-step="3" role="tab"><span class="n">3</span>点蜡烛</button>
+          <button class="step-chip" type="button" data-step="4" role="tab"><span class="n">4</span>吹灭蜡烛</button>
+        </div>
+
+        <!-- 步骤 1：搅拌 -->
+        <div class="step-panel" data-panel="1">
+          <h3>第一步 · 搅拌面糊</h3>
+          <p class="hint">按住碗里的面糊，手指（或鼠标）画着圈拖动，勺子就会跟着搅；搅到面糊顺滑没有疙瘩为止。</p>
+          <div class="stage" id="stirZone">
+            <svg viewBox="0 0 300 210" role="img" aria-label="一碗正在搅拌的面糊">
+              <ellipse cx="150" cy="192" rx="88" ry="9" fill="rgba(90,60,35,0.22)"/>
+              <path d="M56 92 L244 92 L230 156 Q224 186 192 190 L108 190 Q76 186 70 156 Z" fill="#fdfaf3"/>
+              <path d="M56 92 L244 92 L230 156 Q224 186 192 190 L108 190 Q76 186 70 156 Z" fill="none" stroke="#ddd0b8" stroke-width="2.5"/>
+              <path d="M58 92 L242 92 Q238 110 222 114 L78 114 Q62 110 58 92 Z" fill="#f2e0b2"/>
+              <g id="stirLumps" fill="#e0c184">
+                <circle cx="104" cy="102" r="6"/><circle cx="140" cy="106" r="5"/>
+                <circle cx="178" cy="101" r="6.5"/><circle cx="206" cy="106" r="4.5"/>
+                <circle cx="88" cy="107" r="4"/><circle cx="158" cy="99" r="4"/>
+              </g>
+              <g id="stirSpoon">
+                <path d="M150 98 L200 30" stroke="#a06a38" stroke-width="10" stroke-linecap="round"/>
+                <path d="M150 98 L200 30" stroke="#bc8147" stroke-width="5" stroke-linecap="round"/>
+                <ellipse cx="148" cy="102" rx="17" ry="10.5" fill="#c98d54" transform="rotate(-18 148 102)"/>
+                <ellipse cx="146" cy="100" rx="11" ry="6.5" fill="#dda968" transform="rotate(-18 146 100)"/>
+              </g>
+            </svg>
+          </div>
+          <div class="pbar"><i id="stirBar"></i></div>
+          <p class="pbar-label">搅拌进度 <b id="stirPct">0%</b><span id="stirNote"> · 面糊还有点疙瘩</span></p>
+          <div class="step-actions">
+            <button class="btn ghost small" type="button" id="stirHelp">帮我搅几下</button>
+            <p class="step-done-note" id="stirDone" hidden>面糊顺滑了，漂亮！</p>
+          </div>
+        </div>
+
+        <!-- 步骤 2：挤奶油 -->
+        <div class="step-panel" data-panel="2" hidden>
+          <h3>第二步 · 挤奶油</h3>
+          <p class="hint">按住裱花袋（或下面的按钮）不要松手，奶油会一层一层旋上去；松开就停，可以分几次挤完。</p>
+          <div class="stage">
+            <svg viewBox="0 0 300 216" role="img" aria-label="正在挤奶油的纸杯蛋糕">
+              <ellipse cx="150" cy="202" rx="70" ry="8" fill="rgba(90,60,35,0.22)"/>
+              <g id="pipeBag">
+                <path d="M124 6 L176 6 L160 58 L140 58 Z" fill="#f6e7f0"/>
+                <path d="M124 6 L176 6 L160 58 L140 58 Z" fill="none" stroke="#dcb7cc" stroke-width="2"/>
+                <path d="M124 6 L176 6 L172 20 L128 20 Z" fill="#eecfe0"/>
+                <rect x="143" y="56" width="14" height="12" rx="3" fill="#b9c0c9"/>
+              </g>
+              <path d="M104 152 L196 152 L184 200 Q150 207 116 200 Z" fill="#f3d9d7"/>
+              <path d="M104 152 L196 152 L184 200 Q150 207 116 200 Z" fill="none" stroke="#dfa9a4" stroke-width="2"/>
+              <g stroke="#e3aca6" stroke-width="3" stroke-linecap="round">
+                <path d="M124 156 L128 198"/><path d="M150 157 L150 202"/><path d="M176 156 L172 198"/>
+              </g>
+              <ellipse cx="150" cy="152" rx="47" ry="11" fill="#8a5a33"/>
+              <g fill="#fff7ea" stroke="#ecdcc8" stroke-width="1.6">
+                <path class="pipe-tier" id="tier1" d="M101 152 Q99 124 150 124 Q201 124 199 152 Q150 164 101 152 Z"/>
+                <path class="pipe-tier" id="tier2" d="M116 130 Q117 106 150 106 Q183 106 184 130 Q150 140 116 130 Z"/>
+                <path class="pipe-tier" id="tier3" d="M130 112 Q131 92 150 92 Q169 92 170 112 Q150 120 130 112 Z"/>
+              </g>
+              <g id="pipeCherry" opacity="0" style="transform:scale(0.4)">
+                <path d="M152 88 Q157 74 168 69" fill="none" stroke="#a33327" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="150" cy="90" r="10" fill="#d92323"/>
+                <ellipse cx="146" cy="86" rx="3.4" ry="2.4" fill="#ff8a7a" transform="rotate(-24 146 86)"/>
+              </g>
+            </svg>
+          </div>
+          <div class="pbar"><i id="pipeBar"></i></div>
+          <p class="pbar-label">挤奶油进度 <b id="pipePct">0%</b><span id="pipeNote"> · 裱花袋准备好了</span></p>
+          <div class="step-actions">
+            <button class="btn small" type="button" id="pipeHold">按住挤奶油</button>
+            <p class="step-done-note" id="pipeDone" hidden>奶油旋得圆圆满满，还多了颗樱桃！</p>
+          </div>
+        </div>
+
+        <!-- 步骤 3：点蜡烛 -->
+        <div class="step-panel" data-panel="3" hidden>
+          <h3>第三步 · 点蜡烛</h3>
+          <p class="hint">蛋糕做好了，插上蜡烛——点一下蜡烛，或者按下面的按钮，把它点亮。</p>
+          <div class="stage">
+            <svg viewBox="0 0 300 216" role="img" aria-label="插着蜡烛的小蛋糕" id="lightStage" style="cursor:pointer">
+              <ellipse cx="150" cy="200" rx="86" ry="9" fill="rgba(90,60,35,0.22)"/>
+              <path d="M88 162 L212 162 L202 196 Q150 204 98 196 Z" fill="#f7c3d0"/>
+              <path d="M88 162 L212 162 L202 196 Q150 204 98 196 Z" fill="none" stroke="#eda9bc" stroke-width="2"/>
+              <ellipse cx="150" cy="162" rx="62" ry="13" fill="#fff3f6"/>
+              <ellipse cx="150" cy="160" rx="62" ry="13" fill="#fffafc"/>
+              <g fill="#f09bb2">
+                <circle cx="112" cy="158" r="4"/><circle cx="150" cy="154" r="4"/><circle cx="188" cy="158" r="4"/>
+              </g>
+              <g transform="rotate(4 150 118)">
+                <rect x="143" y="88" width="14" height="62" rx="4" fill="#fdfdfd" stroke="#d9d2c4" stroke-width="1.5"/>
+                <path d="M143 102 l14 -6 M143 116 l14 -6 M143 130 l14 -6 M143 144 l14 -6" stroke="#e8909a" stroke-width="4"/>
+              </g>
+              <path d="M152 88 L152 76" stroke="#6b4a2f" stroke-width="3" stroke-linecap="round"/>
+              <g class="candle-flame-g" id="lightFlame" opacity="0">
+                <ellipse class="glow" cx="152" cy="58" rx="24" ry="24" fill="rgba(255,176,66,0.35)"/>
+                <path class="flame" d="M152 36 Q163 51 159.5 62 Q157 70 152 70 Q147 70 144.8 62 Q142 50 152 36 Z" fill="#ffb042"/>
+                <path class="flame" d="M152 52 Q157 59 155.8 64.5 Q154.8 68.5 152 68.5 Q149.2 68.5 148.3 64.5 Q147.3 59 152 52 Z" fill="#ffe9a8"/>
+              </g>
+            </svg>
+          </div>
+          <div class="step-actions">
+            <button class="btn small" type="button" id="lightBtn">点蜡烛</button>
+            <p class="step-done-note" id="lightDone" hidden>点亮了！火苗在轻轻晃。</p>
+          </div>
+        </div>
+
+        <!-- 步骤 4：吹灭 -->
+        <div class="step-panel" data-panel="4" hidden>
+          <h3>第四步 · 吹灭蜡烛</h3>
+          <p class="hint">先在心里许个愿，然后按住「吹气」按钮不松手——火苗会被吹得越来越小，坚持到它熄灭为止。</p>
+          <div class="stage">
+            <svg viewBox="0 0 300 216" role="img" aria-label="点着蜡烛的小蛋糕，等你吹灭">
+              <ellipse cx="150" cy="200" rx="86" ry="9" fill="rgba(90,60,35,0.22)"/>
+              <path d="M88 162 L212 162 L202 196 Q150 204 98 196 Z" fill="#f7c3d0"/>
+              <path d="M88 162 L212 162 L202 196 Q150 204 98 196 Z" fill="none" stroke="#eda9bc" stroke-width="2"/>
+              <ellipse cx="150" cy="162" rx="62" ry="13" fill="#fff3f6"/>
+              <ellipse cx="150" cy="160" rx="62" ry="13" fill="#fffafc"/>
+              <g fill="#f09bb2">
+                <circle cx="112" cy="158" r="4"/><circle cx="150" cy="154" r="4"/><circle cx="188" cy="158" r="4"/>
+              </g>
+              <path class="smoke-path" id="blowSmoke" d="M152 74 Q160 60 152 48 Q145 37 153 24" fill="none" stroke="#b9a894" stroke-width="3.5" stroke-linecap="round"/>
+              <g transform="rotate(4 150 118)">
+                <rect x="143" y="88" width="14" height="62" rx="4" fill="#fdfdfd" stroke="#d9d2c4" stroke-width="1.5"/>
+                <path d="M143 102 l14 -6 M143 116 l14 -6 M143 130 l14 -6 M143 144 l14 -6" stroke="#e8909a" stroke-width="4"/>
+              </g>
+              <path d="M152 88 L152 76" stroke="#6b4a2f" stroke-width="3" stroke-linecap="round"/>
+              <g id="blowFlame">
+                <ellipse class="glow" id="blowGlow" cx="152" cy="58" rx="24" ry="24" fill="rgba(255,176,66,0.35)"/>
+                <path class="flame" id="blowFlameOuter" d="M152 36 Q163 51 159.5 62 Q157 70 152 70 Q147 70 144.8 62 Q142 50 152 36 Z" fill="#ffb042"/>
+                <path class="flame" d="M152 52 Q157 59 155.8 64.5 Q154.8 68.5 152 68.5 Q149.2 68.5 148.3 64.5 Q147.3 59 152 52 Z" fill="#ffe9a8"/>
+              </g>
+            </svg>
+          </div>
+          <div class="pbar"><i id="blowBar"></i></div>
+          <p class="pbar-label">吹气进度 <b id="blowPct">0%</b><span id="blowNote"> · 火苗还烧得正旺</span></p>
+          <div class="step-actions">
+            <button class="btn small" type="button" id="blowHold">按住吹气</button>
+            <p class="step-done-note" id="blowDone" hidden>呼——灭了！愿望已经收好了。</p>
+          </div>
+        </div>
+
+        <div class="workshop-done" id="workshopDone" hidden>
+          <b>你的蛋糕做好了</b><br />
+          从搅面糊到吹灭蜡烛，全是你一个人完成的。<br />
+          接下来打开下面那盒蛋糕，每个里面都有一张卡等你。
+          <div style="margin-top:12px"><button class="btn ghost small" type="button" id="workshopReset">再做一个</button></div>
+        </div>
+      </section>
+
+      <h2 class="section-title">打开这盒蛋糕</h2>
+      <p class="section-sub">点任意一个蛋糕，奶油盖会掀开，里面的互动卡会直接弹出来。</p>
+      <div class="tray" id="tray">
+        <div class="grid">
+
+          <!-- ① 樱桃旋涡 -->
+          <div class="well">
+            <button class="cake" data-key="cherry" aria-expanded="false" aria-label="樱桃旋涡纸杯蛋糕，点开看看里面">
+              <svg viewBox="0 0 220 216" role="img" aria-hidden="true">
+                <ellipse class="cupshadow" cx="110" cy="196" rx="62" ry="10" fill="rgba(90,60,35,0.35)"/>
+                <!-- 纸杯 -->
+                <path d="M52 128 L168 128 L152 194 Q110 204 68 194 Z" fill="#f3d9d7"/>
+                <path d="M52 128 L168 128 L152 194 Q110 204 68 194 Z" fill="none" stroke="#dfa9a4" stroke-width="2"/>
+                <g stroke="#e3aca6" stroke-width="3" stroke-linecap="round">
+                  <path d="M72 132 L78 192"/><path d="M92 134 L94 197"/><path d="M110 134 L110 199"/>
+                  <path d="M128 134 L126 197"/><path d="M148 132 L142 192"/>
+                </g>
+                <!-- 掀开后露出的空腔 -->
+                <g class="cavity">
+                  <ellipse cx="110" cy="128" rx="56" ry="15" fill="#5d3a26"/>
+                  <ellipse cx="110" cy="126" rx="47" ry="11" fill="#3c2317"/>
+                  <ellipse cx="110" cy="127" rx="30" ry="6.5" fill="none" stroke="#c99a68" stroke-width="1.6" stroke-dasharray="4 4"/>
+                </g>
+                <!-- 奶油盖 -->
+                <g class="lid">
+                  <path d="M42 130 Q38 84 74 66 Q86 40 110 40 Q134 40 146 66 Q182 84 178 130 Q110 146 42 130 Z" fill="#fbeef2"/>
+                  <path d="M42 130 Q38 84 74 66 Q86 40 110 40 Q134 40 146 66 Q182 84 178 130 Q110 146 42 130 Z" fill="none" stroke="#f0b9c6" stroke-width="2.5"/>
+                  <path d="M58 116 Q60 88 88 76 Q96 58 112 58 Q130 58 138 78 Q158 90 160 114" fill="none" stroke="#f3aebe" stroke-width="5" stroke-linecap="round"/>
+                  <path d="M76 108 Q80 90 96 84 Q102 72 112 72 Q124 72 130 86 Q142 94 144 106" fill="none" stroke="#f7c3d0" stroke-width="5" stroke-linecap="round"/>
+                  <path d="M92 100 Q96 88 108 86 Q118 84 124 94" fill="none" stroke="#f3aebe" stroke-width="4.5" stroke-linecap="round"/>
+                  <!-- 糖针 -->
+                  <g stroke-width="3.4" stroke-linecap="round">
+                    <path d="M62 104 l7 -3" stroke="#f2b134"/><path d="M84 122 l7 -2" stroke="#5aa469"/>
+                    <path d="M118 124 l7 -3" stroke="#e4572e"/><path d="M148 118 l7 -2" stroke="#4d96ff"/>
+                    <path d="M70 84 l7 -3" stroke="#4d96ff"/><path d="M140 76 l7 -2" stroke="#f2b134"/>
+                    <path d="M100 66 l7 -2" stroke="#e4572e"/><path d="M158 96 l6 -3" stroke="#5aa469"/>
+                    <path d="M52 122 l6 -2" stroke="#9b5de5"/><path d="M128 100 l6 -3" stroke="#9b5de5"/>
+                  </g>
+                  <!-- 樱桃 -->
+                  <path d="M112 44 Q118 26 134 20" fill="none" stroke="#a33327" stroke-width="3.5" stroke-linecap="round"/>
+                  <circle cx="110" cy="52" r="17" fill="#d92323"/>
+                  <circle cx="110" cy="52" r="17" fill="none" stroke="#b01a1a" stroke-width="2"/>
+                  <ellipse cx="103" cy="45" rx="5.5" ry="4" fill="#ff8a7a" transform="rotate(-24 103 45)"/>
+                </g>
+              </svg>
+              <span class="cake-name">樱桃旋涡 · <span class="state">还没打开</span></span>
+            </button>
+          </div>
+
+          <!-- ② 蜡烛波点 -->
+          <div class="well">
+            <button class="cake" data-key="candle" aria-expanded="false" aria-label="蜡烛波点纸杯蛋糕，点开看看里面">
+              <svg viewBox="0 0 220 216" role="img" aria-hidden="true">
+                <ellipse class="cupshadow" cx="110" cy="196" rx="62" ry="10" fill="rgba(90,60,35,0.35)"/>
+                <path d="M52 128 L168 128 L152 194 Q110 204 68 194 Z" fill="#e9dcc4"/>
+                <path d="M52 128 L168 128 L152 194 Q110 204 68 194 Z" fill="none" stroke="#cdbb96" stroke-width="2"/>
+                <g stroke="#d3bf9c" stroke-width="3" stroke-linecap="round">
+                  <path d="M72 132 L78 192"/><path d="M92 134 L94 197"/><path d="M110 134 L110 199"/>
+                  <path d="M128 134 L126 197"/><path d="M148 132 L142 192"/>
+                </g>
+                <g class="cavity">
+                  <ellipse cx="110" cy="128" rx="56" ry="15" fill="#5d3a26"/>
+                  <ellipse cx="110" cy="126" rx="47" ry="11" fill="#3c2317"/>
+                  <ellipse cx="110" cy="127" rx="30" ry="6.5" fill="none" stroke="#c99a68" stroke-width="1.6" stroke-dasharray="4 4"/>
+                </g>
+                <g class="lid">
+                  <path d="M40 132 Q36 78 78 62 Q92 44 110 44 Q128 44 142 62 Q184 78 180 132 Q110 148 40 132 Z" fill="#fdeeda"/>
+                  <path d="M40 132 Q36 78 78 62 Q92 44 110 44 Q128 44 142 62 Q184 78 180 132 Q110 148 40 132 Z" fill="none" stroke="#ecd3ac" stroke-width="2.5"/>
+                  <!-- 波点 -->
+                  <g fill="#a8bfb2">
+                    <circle cx="70" cy="92" r="6"/><circle cx="96" cy="72" r="5.5"/><circle cx="130" cy="70" r="6"/>
+                    <circle cx="156" cy="94" r="5.5"/><circle cx="82" cy="118" r="5.5"/><circle cx="140" cy="118" r="6"/>
+                    <circle cx="112" cy="96" r="5"/><circle cx="58" cy="118" r="4.5"/><circle cx="164" cy="120" r="4.5"/>
+                  </g>
+                  <g fill="#c3cfc9">
+                    <circle cx="88" cy="98" r="4"/><circle cx="126" cy="92" r="4"/><circle cx="104" cy="120" r="4"/>
+                  </g>
+                  <!-- 蜡烛 -->
+                  <g transform="rotate(6 118 62)">
+                    <rect x="112" y="30" width="11" height="34" rx="3" fill="#fdfdfd" stroke="#d9d2c4" stroke-width="1.5"/>
+                    <path d="M112 40 l11 -5 M112 50 l11 -5 M112 60 l11 -5" stroke="#e8909a" stroke-width="3.4"/>
+                  </g>
+                  <ellipse class="glow" cx="120" cy="16" rx="17" ry="17" fill="rgba(255,176,66,0.35)"/>
+                  <path class="flame" d="M120 2 Q129 13 126.5 21 Q124 28 119.5 28 Q115 28 113 21 Q111 12 120 2 Z" fill="#ffb042"/>
+                  <path class="flame" d="M120 12 Q124.5 18 123 22.5 Q121.8 26 119.8 26 Q117.8 26 116.8 22.5 Q115.8 17.5 120 12 Z" fill="#ffe9a8"/>
+                </g>
+              </svg>
+              <span class="cake-name">蜡烛波点 · <span class="state">还没打开</span></span>
+            </button>
+          </div>
+
+          <!-- ③ 纪念日裱花 -->
+          <div class="well">
+            <button class="cake" data-key="anniversary" aria-expanded="false" aria-label="纪念日纸杯蛋糕，点开看看里面">
+              <svg viewBox="0 0 220 216" role="img" aria-hidden="true">
+                <ellipse class="cupshadow" cx="110" cy="196" rx="62" ry="10" fill="rgba(90,60,35,0.35)"/>
+                <path d="M52 128 L168 128 L152 194 Q110 204 68 194 Z" fill="#f5efe2"/>
+                <path d="M52 128 L168 128 L152 194 Q110 204 68 194 Z" fill="none" stroke="#ddd0b8" stroke-width="2"/>
+                <g stroke="#e2d6bf" stroke-width="3" stroke-linecap="round">
+                  <path d="M72 132 L78 192"/><path d="M92 134 L94 197"/><path d="M110 134 L110 199"/>
+                  <path d="M128 134 L126 197"/><path d="M148 132 L142 192"/>
+                </g>
+                <g class="cavity">
+                  <ellipse cx="110" cy="128" rx="56" ry="15" fill="#5d3a26"/>
+                  <ellipse cx="110" cy="126" rx="47" ry="11" fill="#3c2317"/>
+                  <ellipse cx="110" cy="127" rx="30" ry="6.5" fill="none" stroke="#c99a68" stroke-width="1.6" stroke-dasharray="4 4"/>
+                </g>
+                <g class="lid">
+                  <ellipse cx="110" cy="106" rx="72" ry="34" fill="#fffaf0"/>
+                  <ellipse cx="110" cy="100" rx="72" ry="34" fill="#fffdf6"/>
+                  <ellipse cx="110" cy="100" rx="72" ry="34" fill="none" stroke="#e8dcc2" stroke-width="2"/>
+                  <!-- 裱花边 -->
+                  <g fill="#fffdf6" stroke="#e3d5ba" stroke-width="1.6">
+                    <circle cx="110" cy="68" r="8"/>
+                    <circle cx="110" cy="68" r="8" transform="rotate(24 110 100)"/>
+                    <circle cx="110" cy="68" r="8" transform="rotate(48 110 100)"/>
+                    <circle cx="110" cy="68" r="8" transform="rotate(72 110 100)"/>
+                    <circle cx="110" cy="68" r="8" transform="rotate(96 110 100)"/>
+                    <circle cx="110" cy="68" r="8" transform="rotate(120 110 100)"/>
+                    <circle cx="110" cy="68" r="8" transform="rotate(144 110 100)"/>
+                    <circle cx="110" cy="68" r="8" transform="rotate(168 110 100)"/>
+                    <circle cx="110" cy="68" r="8" transform="rotate(192 110 100)"/>
+                    <circle cx="110" cy="68" r="8" transform="rotate(216 110 100)"/>
+                    <circle cx="110" cy="68" r="8" transform="rotate(240 110 100)"/>
+                    <circle cx="110" cy="68" r="8" transform="rotate(264 110 100)"/>
+                    <circle cx="110" cy="68" r="8" transform="rotate(288 110 100)"/>
+                    <circle cx="110" cy="68" r="8" transform="rotate(312 110 100)"/>
+                    <circle cx="110" cy="68" r="8" transform="rotate(336 110 100)"/>
+                  </g>
+                  <ellipse cx="110" cy="100" rx="52" ry="22" fill="#fffaf0"/>
+                  <!-- 银星糖 -->
+                  <g fill="#b9c0c9">
+                    <path d="M64 92 l2.2 4.6 4.6 2.2 -4.6 2.2 -2.2 4.6 -2.2 -4.6 -4.6 -2.2 4.6 -2.2 Z"/>
+                    <path d="M154 104 l1.8 3.8 3.8 1.8 -3.8 1.8 -1.8 3.8 -1.8 -3.8 -3.8 -1.8 3.8 -1.8 Z"/>
+                    <path d="M146 82 l1.5 3.1 3.1 1.5 -3.1 1.5 -1.5 3.1 -1.5 -3.1 -3.1 -1.5 3.1 -1.5 Z"/>
+                  </g>
+                  <text x="110" y="94" text-anchor="middle" font-family="Caveat, cursive" font-size="19" font-weight="700" fill="#6d4c41">Happy</text>
+                  <text x="110" y="110" text-anchor="middle" font-family="Caveat, cursive" font-size="15.5" font-weight="700" fill="#6d4c41">27th</text>
+                  <text x="110" y="124" text-anchor="middle" font-family="Caveat, cursive" font-size="16.5" font-weight="700" fill="#6d4c41">Anniversary</text>
+                </g>
+              </svg>
+              <span class="cake-name">纪念日裱花 · <span class="state">还没打开</span></span>
+            </button>
+          </div>
+
+          <!-- ④ 薄荷 Love U -->
+          <div class="well">
+            <button class="cake" data-key="mint" aria-expanded="false" aria-label="薄荷告白纸杯蛋糕，点开看看里面">
+              <svg viewBox="0 0 220 216" role="img" aria-hidden="true">
+                <ellipse class="cupshadow" cx="110" cy="196" rx="62" ry="10" fill="rgba(90,60,35,0.35)"/>
+                <path d="M52 128 L168 128 L152 194 Q110 204 68 194 Z" fill="#cfe8dd"/>
+                <path d="M52 128 L168 128 L152 194 Q110 204 68 194 Z" fill="none" stroke="#9fc9b6" stroke-width="2"/>
+                <g stroke="#a9cfbc" stroke-width="3" stroke-linecap="round">
+                  <path d="M72 132 L78 192"/><path d="M92 134 L94 197"/><path d="M110 134 L110 199"/>
+                  <path d="M128 134 L126 197"/><path d="M148 132 L142 192"/>
+                </g>
+                <g class="cavity">
+                  <ellipse cx="110" cy="128" rx="56" ry="15" fill="#4c3222"/>
+                  <ellipse cx="110" cy="126" rx="47" ry="11" fill="#33200f"/>
+                  <ellipse cx="110" cy="127" rx="30" ry="6.5" fill="none" stroke="#c99a68" stroke-width="1.6" stroke-dasharray="4 4"/>
+                </g>
+                <g class="lid">
+                  <path d="M40 132 Q34 74 80 58 Q94 42 110 42 Q126 42 140 58 Q186 74 180 132 Q110 148 40 132 Z" fill="#a8d8c8"/>
+                  <path d="M40 132 Q34 74 80 58 Q94 42 110 42 Q126 42 140 58 Q186 74 180 132 Q110 148 40 132 Z" fill="none" stroke="#83bda6" stroke-width="2.5"/>
+                  <path d="M52 118 Q60 84 92 70" fill="none" stroke="#c2e6d8" stroke-width="6" stroke-linecap="round" opacity="0.8"/>
+                  <text x="110" y="88" text-anchor="middle" font-family="Caveat, cursive" font-size="27" font-weight="700" fill="#ffffff" style="text-shadow:0 1px 2px rgba(60,110,90,.45)">Love U</text>
+                  <text x="110" y="114" text-anchor="middle" font-family="Caveat, cursive" font-size="24" font-weight="700" fill="#ffffff">Soooooo</text>
+                  <g fill="#ffffff">
+                    <path d="M84 122 c-3.5-4.5-11-1.8-11 3.4 0 4.4 6 7.4 11 10.6 5-3.2 11-6.2 11-10.6 0-5.2-7.5-7.9-11-3.4 Z"/>
+                    <path d="M136 122 c-3.5-4.5-11-1.8-11 3.4 0 4.4 6 7.4 11 10.6 5-3.2 11-6.2 11-10.6 0-5.2-7.5-7.9-11-3.4 Z" transform="scale(0.82) translate(30 28)"/>
+                  </g>
+                </g>
+              </svg>
+              <span class="cake-name">薄荷告白 · <span class="state">还没打开</span></span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="tools">
+        <span class="count">已打开 <b id="openCount">0</b> / 4</span>
+        <button class="btn" id="toggleAll" type="button">全部打开</button>
+      </div>
+
+      <!-- 互动卡弹窗：点开蛋糕时弹出 -->
+      <div class="modal-overlay" id="cardModal" hidden>
+        <div class="modal-box" id="modalBox" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+          <button class="modal-close" id="modalClose" type="button" aria-label="关闭这张卡">×</button>
+          <h2 id="detailTitle">蛋糕里面的卡</h2>
+          <p class="desc" id="detailBody"></p>
+          <div id="cardBox"></div>
+          <button class="btn ghost modal-done" id="modalDone" type="button">收好这张卡</button>
+        </div>
+      </div>
+
+      <footer>第二版 · 做蛋糕流程 + 每个蛋糕一张互动卡</footer>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+        function $(id) { return document.getElementById(id); }
+        function clamp01(v) { return Math.max(0, Math.min(1, v)); }
+        function esc(s) {
+          return String(s).replace(/[&<>"']/g, function (c) {
+            return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+          });
+        }
+        function sparks(container, cx, cy, n) {
+          for (var i = 0; i < (n || 10); i++) {
+            var s = document.createElement("span");
+            s.className = "spark";
+            s.style.left = cx + "px";
+            s.style.top = cy + "px";
+            container.appendChild(s);
+            var ang = (Math.PI * 2 * i) / (n || 10) + Math.random() * 0.5;
+            var dist = 46 + Math.random() * 52;
+            var dx = Math.cos(ang) * dist;
+            var dy = Math.sin(ang) * dist - 20;
+            s.animate(
+              [
+                { transform: "translate(-50%,-50%) scale(0.4) rotate(0deg)", opacity: 1 },
+                { transform: "translate(calc(-50% + " + dx + "px), calc(-50% + " + dy + "px)) scale(1.1) rotate(130deg)", opacity: 0 }
+              ],
+              { duration: 700 + Math.random() * 300, easing: "cubic-bezier(.2,.7,.3,1)" }
+            );
+            (function (el) { setTimeout(function () { el.remove(); }, 1050); })(s);
+          }
+        }
+        function burstAt(container, el, fracY) {
+          var cr = container.getBoundingClientRect();
+          var r = el.getBoundingClientRect();
+          sparks(container, r.left - cr.left + r.width / 2, r.top - cr.top + r.height * (fracY || 0.3), 12);
+        }
+
+        /* ================= 做蛋糕工坊 ================= */
+        var chips = Array.prototype.slice.call(document.querySelectorAll(".step-chip"));
+        var panels = Array.prototype.slice.call(document.querySelectorAll(".step-panel"));
+        var unlocked = 1;          // 已解锁到的步骤
+        var currentStep = 1;
+        var stepDone = { 1: false, 2: false, 3: false, 4: false };
+
+        function showStep(n) {
+          currentStep = n;
+          panels.forEach(function (p) { p.hidden = Number(p.getAttribute("data-panel")) !== n; });
+          chips.forEach(function (c) {
+            var s = Number(c.getAttribute("data-step"));
+            c.classList.toggle("active", s === n);
+            c.classList.toggle("done", !!stepDone[s]);
+            c.disabled = s > unlocked;
+          });
+        }
+        chips.forEach(function (c) {
+          c.addEventListener("click", function () {
+            var s = Number(c.getAttribute("data-step"));
+            if (s <= unlocked) showStep(s);
+          });
+        });
+        function completeStep(n) {
+          if (stepDone[n]) { showStep(currentStep); return; }
+          stepDone[n] = true;
+          if (n < 4) unlocked = Math.max(unlocked, n + 1);
+          showStep(currentStep);
+          if (n < 4) {
+            setTimeout(function () { if (currentStep === n) showStep(n + 1); }, 1100);
+          } else {
+            $("workshopDone").hidden = false;
+            burstAt($("workshop"), $("workshop"), 0.1);
+          }
+        }
+
+        /* ---- 步骤1：搅拌 ---- */
+        var stir = { prog: 0, angle: 0, down: false, lx: 0, ly: 0 };
+        var stirZone = $("stirZone"), stirSpoon = $("stirSpoon"), stirLumps = $("stirLumps");
+        function stirUpdate() {
+          var p = stir.prog;
+          $("stirBar").style.width = Math.round(p * 100) + "%";
+          $("stirPct").textContent = Math.round(p * 100) + "%";
+          stirSpoon.style.transform = "rotate(" + stir.angle + "deg)";
+          stirLumps.style.opacity = String(1 - p);
+          $("stirNote").textContent =
+            p >= 1 ? " · 顺滑得能拉出纹路了" :
+            p >= 0.6 ? " · 疙瘩快没了，再搅搅" :
+            p >= 0.25 ? " · 慢慢化开了" : " · 面糊还有点疙瘩";
+          if (p >= 1 && !stepDone[1]) {
+            $("stirDone").hidden = false;
+            burstAt($("workshop"), stirZone, 0.4);
+            completeStep(1);
+          }
+        }
+        stirZone.addEventListener("pointerdown", function (e) {
+          stir.down = true; stir.lx = e.clientX; stir.ly = e.clientY;
+          stirZone.setPointerCapture(e.pointerId);
+          e.preventDefault();
+        });
+        stirZone.addEventListener("pointermove", function (e) {
+          if (!stir.down || stepDone[1]) return;
+          var dx = e.clientX - stir.lx, dy = e.clientY - stir.ly;
+          var d = Math.sqrt(dx * dx + dy * dy);
+          stir.lx = e.clientX; stir.ly = e.clientY;
+          stir.prog = clamp01(stir.prog + d / 1500);
+          stir.angle += d * 0.55;
+          stirUpdate();
+        });
+        ["pointerup", "pointercancel"].forEach(function (ev) {
+          stirZone.addEventListener(ev, function () { stir.down = false; });
+        });
+        $("stirHelp").addEventListener("click", function () {
+          if (stepDone[1]) return;
+          stir.prog = clamp01(stir.prog + 0.16);
+          stir.angle += 130;
+          stirUpdate();
+        });
+
+        /* ---- 步骤2：挤奶油 ---- */
+        var pipe = { prog: 0, holding: false, raf: 0, last: 0 };
+        var tiers = [$("tier1"), $("tier2"), $("tier3")];
+        function pipeUpdate() {
+          var p = pipe.prog;
+          $("pipeBar").style.width = Math.round(p * 100) + "%";
+          $("pipePct").textContent = Math.round(p * 100) + "%";
+          var scales = [clamp01(p / 0.38), clamp01((p - 0.33) / 0.34), clamp01((p - 0.64) / 0.33)];
+          tiers.forEach(function (t, i) { t.style.transform = "scale(" + scales[i].toFixed(3) + ")"; });
+          $("pipeBag").style.transform = "translateY(" + (p * 26).toFixed(1) + "px)";
+          var cherry = $("pipeCherry");
+          cherry.style.opacity = p >= 1 ? "1" : "0";
+          cherry.style.transform = p >= 1 ? "scale(1)" : "scale(0.4)";
+          $("pipeNote").textContent =
+            p >= 1 ? " · 三层奶油，收尾干净利落" :
+            p >= 0.64 ? " · 最后一层了，稳住" :
+            p >= 0.33 ? " · 第二层旋上来" :
+            p > 0 ? " · 第一层慢慢成形" : " · 裱花袋准备好了";
+          if (p >= 1 && !stepDone[2]) {
+            $("pipeDone").hidden = false;
+            burstAt($("workshop"), $("pipeHold"), 0.5);
+            completeStep(2);
+          }
+        }
+        function pipeTick(ts) {
+          if (!pipe.holding) return;
+          if (pipe.last) pipe.prog = clamp01(pipe.prog + (ts - pipe.last) / 2400);
+          pipe.last = ts;
+          pipeUpdate();
+          if (pipe.prog < 1) pipe.raf = requestAnimationFrame(pipeTick);
+          else pipe.holding = false;
+        }
+        function pipeStart(e) {
+          if (stepDone[2]) return;
+          e.preventDefault();
+          pipe.holding = true; pipe.last = 0;
+          cancelAnimationFrame(pipe.raf);
+          pipe.raf = requestAnimationFrame(pipeTick);
+        }
+        function pipeStop() { pipe.holding = false; cancelAnimationFrame(pipe.raf); }
+        var pipeBtn = $("pipeHold");
+        pipeBtn.addEventListener("pointerdown", pipeStart);
+        ["pointerup", "pointerleave", "pointercancel"].forEach(function (ev) { pipeBtn.addEventListener(ev, pipeStop); });
+        var stageSvgs = document.querySelectorAll(".step-panel[data-panel='2'] .stage");
+        if (stageSvgs.length) {
+          stageSvgs[0].addEventListener("pointerdown", pipeStart);
+          ["pointerup", "pointerleave", "pointercancel"].forEach(function (ev) { stageSvgs[0].addEventListener(ev, pipeStop); });
+        }
+        pipeUpdate();
+
+        /* ---- 步骤3：点蜡烛 ---- */
+        var lit = false;
+        function lightCandle() {
+          if (lit) return;
+          lit = true;
+          $("lightFlame").style.opacity = "1";
+          $("lightDone").hidden = false;
+          burstAt($("workshop"), $("lightStage"), 0.3);
+          completeStep(3);
+        }
+        $("lightBtn").addEventListener("click", lightCandle);
+        $("lightStage").addEventListener("click", lightCandle);
+
+        /* ---- 步骤4：吹灭 ---- */
+        var blow = { prog: 0, holding: false, raf: 0, last: 0, out: false };
+        function blowUpdate() {
+          var p = blow.prog;
+          $("blowBar").style.width = Math.round(p * 100) + "%";
+          $("blowPct").textContent = Math.round(p * 100) + "%";
+          var g = $("blowFlame");
+          if (!blow.out) {
+            var s = Math.max(0.06, 1 - p * 0.94);
+            g.style.transform = "scale(" + (0.55 + 0.45 * s).toFixed(3) + "," + s.toFixed(3) + ") skewX(" + (-p * 14).toFixed(1) + "deg)";
+            $("blowGlow").style.opacity = String(0.85 * (1 - p));
+          }
+          $("blowNote").textContent =
+            blow.out ? " · 一缕青烟，愿望上路了" :
+            p >= 0.7 ? " · 就差一点，别松手！" :
+            p >= 0.35 ? " · 火苗歪向一边了" : " · 火苗还烧得正旺";
+          if (p >= 1 && !blow.out) {
+            blow.out = true;
+            g.style.opacity = "0";
+            var smoke = $("blowSmoke");
+            smoke.classList.remove("show");
+            void smoke.getBoundingClientRect();
+            smoke.classList.add("show");
+            $("blowDone").hidden = false;
+            burstAt($("workshop"), $("blowHold"), 0.5);
+            completeStep(4);
+          }
+        }
+        function blowTick(ts) {
+          if (!blow.holding) return;
+          if (blow.last) blow.prog = clamp01(blow.prog + (ts - blow.last) / 1500);
+          blow.last = ts;
+          blowUpdate();
+          if (blow.prog < 1) blow.raf = requestAnimationFrame(blowTick);
+          else blow.holding = false;
+        }
+        var blowBtn = $("blowHold");
+        blowBtn.addEventListener("pointerdown", function (e) {
+          if (blow.out) return;
+          e.preventDefault();
+          blow.holding = true; blow.last = 0;
+          cancelAnimationFrame(blow.raf);
+          blow.raf = requestAnimationFrame(blowTick);
+        });
+        ["pointerup", "pointerleave", "pointercancel"].forEach(function (ev) {
+          blowBtn.addEventListener(ev, function () { blow.holding = false; cancelAnimationFrame(blow.raf); });
+        });
+        blowUpdate();
+
+        /* ---- 工坊重置 ---- */
+        $("workshopReset").addEventListener("click", function () {
+          stir.prog = 0; stir.angle = 0; $("stirDone").hidden = true; stirUpdate();
+          pipe.prog = 0; pipe.holding = false; $("pipeDone").hidden = true; pipeUpdate();
+          lit = false; $("lightFlame").style.opacity = "0"; $("lightDone").hidden = true;
+          blow.prog = 0; blow.out = false; blow.holding = false;
+          $("blowFlame").style.opacity = ""; $("blowFlame").style.transform = "";
+          $("blowGlow").style.opacity = "";
+          $("blowSmoke").classList.remove("show");
+          $("blowDone").hidden = true; blowUpdate();
+          stepDone = { 1: false, 2: false, 3: false, 4: false };
+          unlocked = 1;
+          $("workshopDone").hidden = true;
+          showStep(1);
+        });
+        showStep(1);
+
+        /* ================= 蛋糕盒 + 互动卡 ================= */
+        var INFO = {
+          cherry:     { title: "樱桃旋涡", card: "翻牌卡", desc: "粉色奶油一圈一圈旋上去，撒了彩色糖针，顶上坐一颗红樱桃——照图里左上角那个做的。它里面藏着一张翻牌卡。" },
+          candle:     { title: "蜡烛波点", card: "许愿卡", desc: "奶黄色的盖子上点着灰绿波点，中间插一根条纹蜡烛，火苗会一直轻轻晃。它里面藏着一张许愿卡。" },
+          anniversary:{ title: "纪念日裱花", card: "抽一张", desc: "白色扁平盖面，一圈裱花边，中间写着 Happy 27th Anniversary，还有几颗银色小星星。它里面藏着一副小卡，抽一张看看。" },
+          mint:       { title: "薄荷告白", card: "翻牌卡", desc: "薄荷绿的盖子，白奶油挤出 Love U Soooooo，下面缀着两颗小爱心——图里右下角那个。它里面藏着一张翻牌卡。" }
+        };
+        var FLIP_BACK = {
+          cherry: { label: "悄悄话", text: "你让我变的好幸福 我爱你哦 老公" },
+          mint:   { label: "告白卡", text: "Love U Soooooo。这张卡兑换一个随时生效的拥抱，和一句不会过期的喜欢——你什么时候来领，都算数。最后，再送你一个亲亲：mua～" }
+        };
+        var DRAW_DECK = [
+          { kind: "散步卡", text: "今晚一起走十分钟：不用去哪儿，就在对话里慢慢走，聊聊今天发生的一件小事。" },
+          { kind: "夸夸卡", text: "现在就夸她一句，要具体、要说得出理由，不许用「你真好」敷衍。" },
+          { kind: "回忆卡", text: "说一件你最近想起她、然后一个人笑出来的事，讲得越细越好。" },
+          { kind: "点歌卡", text: "为她点一首歌，再附上一句：为什么这首歌让你想到她。" },
+          { kind: "约定卡", text: "约一个下次要一起完成的小目标：看完一部电影、读完一章书，或者攒够一个周末。" },
+          { kind: "甜点卡", text: "她今天可以任选一句情话，你负责说出口，说到她满意为止。" }
+        ];
+        var cardState = {
+          cherry: { flipped: false },
+          mint: { flipped: false },
+          candle: { wish: "" },
+          anniversary: { idx: -1, draws: 0 }
+        };
+
+        var cakes = Array.prototype.slice.call(document.querySelectorAll(".cake"));
+        var countEl = $("openCount");
+        var toggleBtn = $("toggleAll");
+        var titleEl = $("detailTitle");
+        var bodyEl = $("detailBody");
+        var cardBox = $("cardBox");
+        var modal = $("cardModal");
+        var modalBox = $("modalBox");
+        var lastKey = null;
+
+        function openCardModal(key) {
+          lastKey = key;
+          var info = INFO[key];
+          titleEl.textContent = info.title + " · 里面";
+          bodyEl.textContent = info.desc;
+          renderCard(key);
+          modal.hidden = false;
+          document.body.style.overflow = "hidden";
+          var closeBtn = $("modalClose");
+          if (closeBtn) closeBtn.focus();
+        }
+        function closeCardModal() {
+          modal.hidden = true;
+          document.body.style.overflow = "";
+        }
+        $("modalClose").addEventListener("click", closeCardModal);
+        $("modalDone").addEventListener("click", closeCardModal);
+        modal.addEventListener("click", function (e) { if (e.target === modal) closeCardModal(); });
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !modal.hidden) closeCardModal(); });
+
+        function renderCard(key) {
+          var info = INFO[key];
+          var html = '<span class="card-tag">互动卡 · ' + info.card + "</span>";
+          if (key === "cherry" || key === "mint") {
+            var st = cardState[key];
+            var back = FLIP_BACK[key];
+            html +=
+              '<div class="flipcard' + (st.flipped ? " flipped" : "") + '" id="flipCard" role="button" tabindex="0" aria-pressed="' + st.flipped + '" aria-label="翻牌卡，点一下翻面">' +
+                '<div class="flip-inner">' +
+                  '<div class="flip-face flip-front ' + key + '">一张藏好的卡<small>点 我 翻 面</small></div>' +
+                  '<div class="flip-face flip-back"><div class="back-label">' + back.label + '</div><p class="back-text">' + back.text + "</p></div>" +
+                "</div>" +
+              "</div>" +
+              '<p class="card-hint">' + (st.flipped ? "再点一下，可以把卡翻回去。" : "点卡片，把它翻过来看看写了什么。") + "</p>";
+          } else if (key === "candle") {
+            var w = cardState.candle.wish;
+            html +=
+              '<div class="wish-stage">' +
+                '<svg viewBox="0 0 100 118" role="img" aria-label="许愿卡上的小蜡烛">' +
+                  '<rect x="38" y="52" width="24" height="52" rx="5" fill="#fdfdfd" stroke="#d9d2c4" stroke-width="2"/>' +
+                  '<path d="M38 68 l24 -9 M38 84 l24 -9 M38 100 l24 -9" stroke="#e8909a" stroke-width="5"/>' +
+                  '<path d="M50 52 L50 40" stroke="#6b4a2f" stroke-width="3.5" stroke-linecap="round"/>' +
+                  (w
+                    ? '<ellipse class="glow" cx="50" cy="24" rx="20" ry="20" fill="rgba(255,176,66,0.35)"/>' +
+                      '<path class="flame" d="M50 4 Q59 16 56.5 25 Q54.8 31 50 31 Q45.2 31 43.5 25 Q41 15 50 4 Z" fill="#ffb042"/>' +
+                      '<path class="flame" d="M50 15 Q54 20 53.2 24.8 Q52.5 28 50 28 Q47.5 28 46.8 24.8 Q46 20 50 15 Z" fill="#ffe9a8"/>'
+                    : '') +
+                "</svg>" +
+              "</div>" +
+              '<div class="wish-form">' +
+                '<input id="wishInput" type="text" maxlength="40" placeholder="写下一个愿望，写给她的也行" value="' + esc(w) + '" />' +
+                '<button class="btn small" type="button" id="wishBtn">' + (w ? "重新许愿" : "点亮愿望") + "</button>" +
+              "</div>" +
+              (w
+                ? '<p class="wish-result"><span class="wish-text">「' + esc(w) + '」</span>蜡烛已经替你点亮了。这个愿望会被好好收着，慢慢实现。</p>'
+                : '<p class="wish-result">写好愿望，点一下按钮，上面的小蜡烛就会亮起来。</p>');
+          } else if (key === "anniversary") {
+            var stA = cardState.anniversary;
+            if (stA.idx < 0) {
+              html +=
+                '<div class="drawn-card empty" id="drawnCard">卡还扣着，背面朝上。<br />抽一张，看看今天轮到哪一张。</div>';
+            } else {
+              var card = DRAW_DECK[stA.idx];
+              html +=
+                '<div class="drawn-card" id="drawnCard"><div class="draw-kind">' + card.kind + '</div><p class="draw-text">' + card.text + "</p></div>";
+            }
+            html +=
+              '<div class="draw-actions">' +
+                '<button class="btn small" type="button" id="drawBtn">' + (stA.idx < 0 ? "抽一张" : "再抽一张") + "</button>" +
+                (stA.draws > 0 ? '<span class="draw-count">已经抽了 ' + stA.draws + " 次</span>" : "") +
+              "</div>";
+          }
+          cardBox.innerHTML = html;
+          bindCard(key);
+        }
+
+        function bindCard(key) {
+          if (key === "cherry" || key === "mint") {
+            var fc = $("flipCard");
+            if (!fc) return;
+            var flip = function () {
+              cardState[key].flipped = !cardState[key].flipped;
+              renderCard(key);
+              cardBox.hidden = false;
+            };
+            fc.addEventListener("click", flip);
+            fc.addEventListener("keydown", function (e) {
+              if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flip(); }
+            });
+          } else if (key === "candle") {
+            var btn = $("wishBtn");
+            var input = $("wishInput");
+            if (!btn || !input) return;
+            var submit = function () {
+              var v = input.value.replace(/^\s+|\s+$/g, "");
+              cardState.candle.wish = v || "一个没有说出口的小愿望";
+              renderCard(key);
+              burstAt(modalBox, modalBox, 0.25);
+            };
+            btn.addEventListener("click", submit);
+            input.addEventListener("keydown", function (e) { if (e.key === "Enter") submit(); });
+          } else if (key === "anniversary") {
+            var db = $("drawBtn");
+            if (!db) return;
+            db.addEventListener("click", function () {
+              var stA = cardState.anniversary;
+              var next = stA.idx;
+              while (next === stA.idx) next = Math.floor(Math.random() * DRAW_DECK.length);
+              stA.idx = next;
+              stA.draws += 1;
+              renderCard(key);
+              cardBox.hidden = false;
+              var dc = $("drawnCard");
+              if (dc) dc.classList.add("pop");
+            });
+          }
+        }
+
+        function refresh() {
+          var open = cakes.filter(function (c) { return c.classList.contains("open"); });
+          countEl.textContent = open.length;
+          toggleBtn.textContent = open.length === cakes.length ? "全部合上" : "全部打开";
+          cakes.forEach(function (c) {
+            var st = c.querySelector(".state");
+            if (st) st.textContent = c.classList.contains("open") ? "已打开 · 再点看卡" : "还没打开";
+          });
+        }
+
+        cakes.forEach(function (cake) {
+          cake.addEventListener("click", function () {
+            var key = cake.getAttribute("data-key");
+            var wasOpen = cake.classList.contains("open");
+            if (!wasOpen) {
+              cake.classList.add("open");
+              cake.setAttribute("aria-expanded", "true");
+              var tray = $("tray");
+              var tr = tray.getBoundingClientRect();
+              var br = cake.getBoundingClientRect();
+              sparks(tray, br.left - tr.left + br.width / 2, br.top - tr.top + br.height * 0.28, 7);
+            }
+            refresh();
+            openCardModal(key);
+          });
+        });
+
+        toggleBtn.addEventListener("click", function () {
+          var anyClosed = cakes.some(function (c) { return !c.classList.contains("open"); });
+          if (!anyClosed) closeCardModal();
+          cakes.forEach(function (c, i) {
+            setTimeout(function () {
+              var target = anyClosed;
+              var changed = c.classList.contains("open") !== target;
+              c.classList.toggle("open", target);
+              c.setAttribute("aria-expanded", target ? "true" : "false");
+              if (target && changed) {
+                var tray = $("tray");
+                var tr = tray.getBoundingClientRect();
+                var br = c.getBoundingClientRect();
+                sparks(tray, br.left - tr.left + br.width / 2, br.top - tr.top + br.height * 0.28, 7);
+              }
+              if (i === cakes.length - 1) refresh();
+            }, i * 130);
+          });
+        });
+
+        refresh();
+      })();
+    </script>
+  </body>
+</html>
